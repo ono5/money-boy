@@ -1,6 +1,6 @@
 Django==2.*
 django-cors-headers==2.1.0
-djangorestframework==3.7.3
+djangorestframework==3.9.1
 django-rest-auth==0.9.3
 mysql-connector-python==8.0.11
 pytz==2017.3
