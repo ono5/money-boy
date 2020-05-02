@@ -12,6 +12,7 @@ The money-boy is used to manage our household accounts.
 |mysql|Mysql container|
 |nginx|Nginx container|
 |redis|Redis container|
+|phpmyadmin|Phpmyadmin container|
 
 ## Start app
 
