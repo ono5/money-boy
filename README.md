@@ -8,7 +8,8 @@ The money-boy is used to manage our household accounts.
 |app|Django container|
 |api|Golang container|
 |frontend|React container|
-|db|Postgres container|
+|postgres|Postgres container|
+|mysql|Mysql container|
 |nginx|Nginx container|
 |redis|Redis container|
 
@@ -17,4 +18,3 @@ The money-boy is used to manage our household accounts.
 ```bash
 make release
 ```
-

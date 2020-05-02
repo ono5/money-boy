@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
     environment:
       DJANGO_SETTINGS_MODULE: dashboard.settings_release
-      DB_HOST: db
+      DB_HOST: postgres
       DB_NAME: app
       DB_USER: postgres
       DB_PASS: supersecretpassword
@@ -28,7 +28,7 @@ services:
     extends:
       service: release
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     volumes:
       - public:/public
@@ -46,7 +46,7 @@ services:
       - "8080:8080"
     container_name: api
     depends_on:
-      - db
+      - mysql
     volumes:
       - ./api:/go/src/github.com/ono5/goLikers/api
 
@@ -70,7 +70,7 @@ services:
     extends:
       service: release
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     command:
       - python3
@@ -79,7 +79,7 @@ services:
       - --no-input
     container_name: migrate
 
-  db:
+  postgres:
     image: postgres:10-alpine
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -90,7 +90,37 @@ services:
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=supersecretpassword
-    container_name: db
+    container_name: postgres
+
+  mysql:
+      image: mysql:5.7.22
+      environment:
+          MYSQL_ROOT_PASSWORD: admin
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin
+          MYSQL_DATABASE: money-boys
+      ports:
+        - "3306:3306"
+      container_name: mysql
+      volumes:
+        - ./mysql/data:/var/lib/mysql
+        - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./mysql/sql:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOST=mysql
+          - PMA_USER=admin
+          - PMA_PASSWORD=admin
+      links:
+          - mysql
+      ports:
+          - 8888:80
+      volumes:
+          - /sessions
+      container_name: phpmyadmin
 
   nginx:
     image: nginx:1.15.9-alpine
@@ -101,8 +131,6 @@ services:
       - ./nginx/conf:/etc/nginx/conf.d
       - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
       - ./nginx/log:/var/log/nginx
-    depends_on:
-      - app
     container_name: nginx
 
   redis:
