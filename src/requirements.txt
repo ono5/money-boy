@@ -1,0 +1,15 @@
+Django==2.*
+django-cors-headers==2.1.0
+djangorestframework==3.7.3
+django-rest-auth==0.9.3
+mysql-connector-python==8.0.11
+pytz==2017.3
+uwsgi==2.0.17
+psycopg2>=2.7.5,<2.8.0
+psycopg2-binary
+# django-rosetta==0.8.1
+django-redis==4.10.0
+django-markdownx==2.0.28
+django-tables2==2.0.6
+django_taggit==0.22.2
+flake8>=3.6.0,<3.7.0

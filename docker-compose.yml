@@ -1,0 +1,82 @@
+version: '2.4'
+
+volumes:
+  public:
+    driver: local
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    container_name: test
+
+  release:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_SETTINGS_MODULE: dashboard.settings_release
+      DB_HOST: db
+      DB_NAME: app
+      DB_USER: postgres
+      DB_PASS: supersecretpassword
+    container_name: release
+
+  app:
+    extends:
+      service: release
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - public:/public
+      - ./src:/app
+    expose:
+      - "8001"
+    command: uwsgi --ini /app/dashboard/django.ini
+    container_name: app
+
+  migrate:
+    extends:
+      service: release
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - python3
+      - manage.py
+      - migrate
+      - --no-input
+    container_name: migrate
+
+  db:
+    image: postgres:10-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
+    container_name: db
+
+  nginx:
+    image: nginx:1.15.9-alpine
+    ports:
+      - "80:80"
+    volumes:
+    - public:/public
+    - ./nginx/conf:/etc/nginx/conf.d
+    - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+    - ./nginx/log:/var/log/nginx
+    depends_on:
+      - app
+    container_name: nginx
+
+  redis:
+    image: redis:3.0
+    container_name: redis
