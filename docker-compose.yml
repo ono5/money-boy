@@ -38,19 +38,32 @@ services:
     command: uwsgi --ini /app/dashboard/django.ini
     container_name: app
 
+  api:
+    build:
+      context: .
+      dockerfile: "./Dockerfile-golang"
+    ports:
+      - "8080:8080"
+    container_name: api
+    depends_on:
+      - db
+    volumes:
+      - ./api:/go/src/github.com/ono5/goLikers/api
+
   frontend:
       build:
-          context: .
-          dockerfile: "./Dockerfile-nodejs"
+        context: .
+        dockerfile: "./Dockerfile-nodejs"
       volumes:
-          - ./frontend:/frontend
+        - ./frontend:/frontend
       command: >
-          sh -c "cd frontend && yarn start"
+        sh -c "cd frontend && yarn start"
       ports:
-          - "3000:3000"
+        - "3000:3000"
       container_name: frontend
       depends_on:
-          - app
+        - app
+        - api
       stdin_open: true
 
   migrate:
@@ -84,10 +97,10 @@ services:
     ports:
       - "80:80"
     volumes:
-    - public:/public
-    - ./nginx/conf:/etc/nginx/conf.d
-    - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
-    - ./nginx/log:/var/log/nginx
+      - public:/public
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+      - ./nginx/log:/var/log/nginx
     depends_on:
       - app
     container_name: nginx
