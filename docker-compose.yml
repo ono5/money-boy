@@ -38,6 +38,21 @@ services:
     command: uwsgi --ini /app/dashboard/django.ini
     container_name: app
 
+  frontend:
+      build:
+          context: .
+          dockerfile: "./Dockerfile-nodejs"
+      volumes:
+          - ./frontend:/frontend
+      command: >
+          sh -c "cd frontend && yarn start"
+      ports:
+          - "3000:3000"
+      container_name: frontend
+      depends_on:
+          - app
+      stdin_open: true
+
   migrate:
     extends:
       service: release
