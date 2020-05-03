@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      DJANGO_SETTINGS_MODULE: dashboard.settings_release
+      DJANGO_SETTINGS_MODULE: money-boy.settings_release
       DB_HOST: postgres
       DB_NAME: app
       DB_USER: postgres
@@ -35,7 +35,7 @@ services:
       - ./src:/app
     expose:
       - "8001"
-    command: uwsgi --ini /app/dashboard/django.ini
+    command: uwsgi --ini /app/money-boy/django.ini
     container_name: app
 
   api:
