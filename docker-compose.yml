@@ -5,12 +5,12 @@ volumes:
     driver: local
 
 services:
-  test:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: test
-    container_name: test
+#  test:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      target: test
+#    container_name: test
 
   release:
     build:
