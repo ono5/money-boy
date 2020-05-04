@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}money-boy{% endblock %}
+
+{% block custom_static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}">
+{% endblock custom_static %}
+
+{% block content %}
+    <div class="container">
+    </div>
+{% endblock %}
+
+
+{% block custom_js %}
+    <script src="{% static 'js/src/dashboard/dashboard.js' %}"></script>
+
+    <script>
+    </script>
+{% endblock custom_js %}
