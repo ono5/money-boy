@@ -48,7 +48,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - ./api:/go/src/github.com/ono5/goLikers/api
+      - ./api:/go/src/github.com/ono5/money-boys/api
 
   frontend:
       build:

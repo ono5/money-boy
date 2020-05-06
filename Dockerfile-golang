@@ -1,6 +1,6 @@
 FROM golang:latest
 
-ENV SRC_DIR=/go/src/github.com/ono5/goLikers/api
+ENV SRC_DIR=/go/src/github.com/ono5/money-boys/api
 
 ENV GOBIN=/go/bin
 
