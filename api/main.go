@@ -1,7 +1,9 @@
 package main
 
-import "log"
+import (
+	"github.com/ono5/money-boy/api/app"
+)
 
 func main() {
-	log.Println("Start App...")
+	app.StartApp()
 }
