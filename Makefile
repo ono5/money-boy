@@ -1,4 +1,4 @@
-.PHONY: test release clean all_tests ft ut mk clean flash startapp react
+.PHONY: test release clean all_tests ft ut mk clean flash startapp react restart
 
 test:
 	docker-compose build --pull release
@@ -48,3 +48,7 @@ docker_clean:
 
 react:
 	docker-compose run --rm frontend sh -c "npx create-react-app frontend"
+
+restart:
+	docker-compose stop ${name}
+	docker-compose up ${name}
