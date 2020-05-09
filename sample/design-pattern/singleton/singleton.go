@@ -35,13 +35,27 @@ func GetSingletonDatabase(filePath string) *singletonDatabase {
 	return instance
 }
 
-func main() {
-	db := GetSingletonDatabase("/capitals.txt")
-	pop := db.GetPopulation("Tokyo")
-	fmt.Println("Pop of Tokyo = ", pop)
+// GetTotalPopulation - returns total population num
+func GetTotalPopulation(cities []string) int {
+	result := 0
+	for _, city := range cities {
+		result += GetSingletonDatabase("/capitals.txt").GetPopulation(city)
+	}
+	return result
+}
 
-	// No get new instance
-	db2 := GetSingletonDatabase("test.txt")
-	pop2 := db2.GetPopulation("Tokyo")
-	fmt.Println("Pop of Tokyo = ", pop2)
+func main() {
+	// db := GetSingletonDatabase("/capitals.txt")
+	// pop := db.GetPopulation("Tokyo")
+	// fmt.Println("Pop of Tokyo = ", pop)
+
+	// // No get new instance
+	// db2 := GetSingletonDatabase("test.txt")
+	// pop2 := db2.GetPopulation("Tokyo")
+	// fmt.Println("Pop of Tokyo = ", pop2)
+
+	cities := []string{"Tokyo", "New York"}
+	tp := GetTotalPopulation(cities)
+	ok := tp == (33200000 + 17800000)
+	fmt.Println(ok)
 }
