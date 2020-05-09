@@ -14,3 +14,8 @@ A compoenent which is instantiated only once.
 * Want to prevent anyone creating additional copies
 * Need to take care of lazy instantiation
 
+## summary
+
+* Lazy one-time initialization using sync.Once
+* Adhere to DIP: depend on interfaces, not concrete types
+* Singleton is not scary
