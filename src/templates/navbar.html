@@ -1,25 +1,14 @@
-<nav class="navbar navbar-expand-md navbar-light bg-primary fixed-top">
-    <div id="header">
-        <span class="logo">Money-boys</span>
-            {% if request.user.is_authenticated %}
-                <ul class="menu">
-                    <li {% if section == "dashboard" %}class="selected"{% endif %}>
-                        <a href="{% url "dashboard:home" %}">My dashboard</a>
-                    </li>
-                    <li {% if section == "images" %}class="selected"{% endif %}>
-                        <a href="#">Images</a>
-                    </li>
-                    <li {% if section == "people" %}class="selected"{% endif %}>
-                        <a href="#">People</a>
-                    </li>
-                </ul>
-            {% endif %}
-        <span class="user">
-            {% if request.user.is_authenticated %}
-                Hello {{ request.user.first_name }},
-                <a href="{% url "account:logout" %}">Logout</a>
-                <a href="{% url "account:login" %}">Log-in</a>
-            {% endif %}
-        </span>
+<nav class="navbar navbar-expand-md navbar-light bg-secondary fixed-top">
+  <a class="navbar-brand text-white" href="#">Money-boy</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+    <div class="navbar-nav text-white">
+        {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name }},&nbsp;&nbsp;
+            <a href="{% url "account:logout" %}">Logout</a>
+        {% endif %}
     </div>
+  </div>
 </nav>
