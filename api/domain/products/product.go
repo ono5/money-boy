@@ -1,7 +1,12 @@
 // product.go
 package products
 
-import "time"
+import (
+	"strings"
+	"time"
+
+	"github.com/ono5/money-boy/api/utils/errors"
+)
 
 // Product - defines product info uploaded by user
 type Product struct {
@@ -13,4 +18,13 @@ type Product struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt time.Time
+}
+
+// Validate - check parameters user inputs
+func (p *Product) Validate() *errors.ApiErr {
+	p.Name = strings.TrimSpace(strings.ToLower(p.Name))
+	if p.Name == "" {
+		return errors.NewBadRequestError("invalid product name")
+	}
+	return nil
 }
