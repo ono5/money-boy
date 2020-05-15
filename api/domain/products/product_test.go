@@ -1,3 +1,4 @@
+// product_test.go
 package products
 
 import (
