@@ -1,4 +1,5 @@
-// product.go
+// product_dto.go
+
 package products
 
 import (
