@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/ono5/money-boy/api/domain/products"
 	"github.com/ono5/money-boy/api/utils/errors"
 	"github.com/stretchr/testify/assert"
@@ -30,7 +31,10 @@ func requestHandler(p interface{}) (*gin.Context, *httptest.ResponseRecorder) {
 
 func TestCreateProductNoError(t *testing.T) {
 	// Arrange ---
-	p := products.Product{ID: 123, Name: "coca cola"}
+	p := products.Product{
+		Model: gorm.Model{ID: 123},
+		Name:  "coca cola",
+	}
 	c, response := requestHandler(p)
 	// Act ---
 	CreateProduct(c)
@@ -84,7 +88,10 @@ func getRequestHandler(id string) (*gin.Context, *httptest.ResponseRecorder) {
 
 func TestGetProductNoError(t *testing.T) {
 	// Arrange
-	p := products.Product{ID: 1, Name: "coca cola"}
+	p := products.Product{
+		Model: gorm.Model{ID: 1},
+		Name:  "coca cola",
+	}
 	c, _ := requestHandler(p)
 	CreateProduct(c)
 

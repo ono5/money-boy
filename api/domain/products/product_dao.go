@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	productsDB = make(map[uint64]*Product)
+	productsDB = make(map[uint]*Product)
 )
 
 // Get - product
