@@ -4,7 +4,9 @@ package products
 
 import (
 	"fmt"
+	"log"
 
+	"github.com/ono5/money-boy/api/datasources/mysql/products_db"
 	"github.com/ono5/money-boy/api/utils/errors"
 )
 
@@ -14,6 +16,11 @@ var (
 
 // Get - product
 func (p *Product) Get() *errors.ApiErr {
+	// https://gorm.io/ja_JP/docs/generic_interface.html
+	if err := products_db.Client.DB().Ping(); err != nil {
+		log.Fatal(err)
+	}
+
 	result := productsDB[p.ID]
 	if result == nil {
 		return errors.NewNotFoundError(fmt.Sprintf("product %d not found", p.ID))

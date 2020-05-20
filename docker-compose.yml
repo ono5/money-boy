@@ -49,6 +49,10 @@ services:
       - mysql
     volumes:
       - ./api:/go/src/github.com/ono5/money-boy/api
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: money-boys
 
   frontend:
       build:
