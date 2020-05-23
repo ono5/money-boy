@@ -1,0 +1,29 @@
+{% load static %}
+
+{% block custom_static %}
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+{% endblock custom_static %}
+
+<div class="col-lg-3 sidebar fixed-top">
+    <a 
+      href="#"
+      class="
+        navbar-brand
+        text-white
+        d-block
+        mx-auto
+        text-center
+        py-3
+        mb-4
+        bottom-border"
+    >Money-Boy
+    </a>
+    <div class="bottom-border pb-3">
+        <img 
+          src="{% static 'img/admin.jpeg' %}"
+          width="50"
+          class="rounded-circle mr-3"
+        >
+        <a href="#" class="text-white">Self Note</a>
+    </div>
+</div>

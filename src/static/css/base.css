@@ -2,3 +2,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     background-color: #eee;
 }
+
+.bottom-border {
+    border-bottom: 1px groove #eee;
+}
