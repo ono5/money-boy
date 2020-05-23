@@ -1,7 +1,5 @@
 # Bootstrap
 
-## Navbar
-
 * navbar-expand  
 トグルボタンの表示・非表示に関わるclass
 
@@ -19,3 +17,6 @@ transformのtranslateYを使うホバーじにボタン位置を少しずらす�
     transform: translateY(-1px);
 }
 ```
+
+* align-items-center  
+要素内でitemを中央にできる
