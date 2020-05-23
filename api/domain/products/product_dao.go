@@ -40,13 +40,11 @@ func (p *Product) Get() *errors.ApiErr {
 
 // Save - product
 func (p *Product) Save() *errors.ApiErr {
-	current := productsDB[p.ID]
-	if current != nil {
-		if current.Name == p.Name {
-			return errors.NewBadRequestError(fmt.Sprintf("name %s already registered", p.Name))
-		}
-		return errors.NewBadRequestError(fmt.Sprintf("product %d already exists", p.ID))
+	// https://gorm.io/ja_JP/docs/error_handling.html
+	if result := products_db.Client.Create(&p); result.Error != nil {
+		return errors.NewInternalServerError(
+			fmt.Sprintf("error when trying to save product: %s", result.GetErrors()),
+		)
 	}
-	productsDB[p.ID] = p
 	return nil
 }
