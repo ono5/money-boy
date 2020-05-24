@@ -2,7 +2,7 @@
 create table IF not exists `products`
 (
  `id`               INT(20) AUTO_INCREMENT,
- `name`             VARCHAR(100) NOT NULL,
+ `name`             VARCHAR(100) NOT NULL UNIQUE,
  `detail`           VARCHAR(10000) NOT NULL,
  `price`              INT NOT NULL,
  `img`	            MEDIUMBLOB NULL,
