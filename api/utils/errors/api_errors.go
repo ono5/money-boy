@@ -25,3 +25,11 @@ func NewNotFoundError(message string) *ApiErr {
 		Error:   "not_found",
 	}
 }
+
+func NewInternalServerError(message string) *ApiErr {
+	return &ApiErr{
+		Message: message,
+		Status:  http.StatusInternalServerError,
+		Error:   "internal_server_error",
+	}
+}

@@ -4,8 +4,8 @@ package products
 
 import (
 	"testing"
-	"time"
 
+	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -13,14 +13,11 @@ import (
 func TestProductSaveNoError(t *testing.T) {
 	// Arrange ---
 	p := Product{
-		ID:        1,
-		Name:      "coca cola",
-		Detail:    "Wonderful Drink!!!",
-		Price:     120,
-		Img:       []byte{1, 2, 3},
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		DeletedAt: time.Now(),
+		Model:  gorm.Model{ID: 1},
+		Name:   "coca cola",
+		Detail: "Wonderful Drink!!!",
+		Price:  120,
+		Img:    []byte{1, 2, 3},
 	}
 
 	// Act ---
@@ -34,27 +31,21 @@ func TestProductSaveNoError(t *testing.T) {
 func TestProductSaveBadRequestErrorWithSameName(t *testing.T) {
 	// Arrange ---
 	p := Product{
-		ID:        1,
-		Name:      "coca cola",
-		Detail:    "Wonderful Drink!!!",
-		Price:     120,
-		Img:       []byte{1, 2, 3},
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		DeletedAt: time.Now(),
+		Model:  gorm.Model{ID: 1},
+		Name:   "coca cola",
+		Detail: "Wonderful Drink!!!",
+		Price:  120,
+		Img:    []byte{1, 2, 3},
 	}
 
 	p.Save()
 
 	p2 := Product{
-		ID:        1,
-		Name:      "coca cola",
-		Detail:    "Wonderful Drink!!!",
-		Price:     120,
-		Img:       []byte{1, 2, 3},
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		DeletedAt: time.Now(),
+		Model:  gorm.Model{ID: 1},
+		Name:   "coca cola",
+		Detail: "Wonderful Drink!!!",
+		Price:  120,
+		Img:    []byte{1, 2, 3},
 	}
 
 	// Act ---
@@ -71,27 +62,21 @@ func TestProductSaveBadRequestErrorWithSameName(t *testing.T) {
 func TestProductSaveBadRequestErrorWithSameID(t *testing.T) {
 	// Arrange ---
 	p := Product{
-		ID:        1,
-		Name:      "coca cola",
-		Detail:    "Wonderful Drink!!!",
-		Price:     120,
-		Img:       []byte{1, 2, 3},
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		DeletedAt: time.Now(),
+		Model:  gorm.Model{ID: 1},
+		Name:   "coca cola",
+		Detail: "Wonderful Drink!!!",
+		Price:  120,
+		Img:    []byte{1, 2, 3},
 	}
 
 	p.Save()
 
 	p2 := Product{
-		ID:        1,
-		Name:      "orange",
-		Detail:    "Wonderful Drink!!!",
-		Price:     100,
-		Img:       []byte{1, 2, 3},
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		DeletedAt: time.Now(),
+		Model:  gorm.Model{ID: 1},
+		Name:   "orange",
+		Detail: "Wonderful Drink!!!",
+		Price:  100,
+		Img:    []byte{1, 2, 3},
 	}
 
 	// Act ---
@@ -108,17 +93,14 @@ func TestProductSaveBadRequestErrorWithSameID(t *testing.T) {
 func TestProductGetNoError(t *testing.T) {
 	// Arrange ---
 	p := Product{
-		ID:        1,
-		Name:      "coca cola",
-		Detail:    "Wonderful Drink!!!",
-		Price:     120,
-		Img:       []byte{1, 2, 3},
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		DeletedAt: time.Now(),
+		Model:  gorm.Model{ID: 1},
+		Name:   "coca cola",
+		Detail: "Wonderful Drink!!!",
+		Price:  120,
+		Img:    []byte{1, 2, 3},
 	}
 	p.Save()
-	newP := Product{ID: 1}
+	newP := Product{Model: gorm.Model{ID: 1}}
 
 	// Act ---
 	result := newP.Get()
@@ -134,7 +116,7 @@ func TestProductGetNoError(t *testing.T) {
 // 商品が存在しない場合のテスト
 func TestProductNotFound(t *testing.T) {
 	// Arrange ---
-	p := Product{ID: 100}
+	p := Product{Model: gorm.Model{ID: 100}}
 
 	// Act ---
 	err := p.Get()
