@@ -38,9 +38,10 @@
                     <!-- https://cccabinet.jpn.org/bootstrap4/javascript/tooltips/options -->
                     <a href="{% url 'account:logout' %}" 
                       class="nav-link" 
-                      data-toggle="tooltip"
-                      data-html="true"
-                      title="Log-out">
+                      data-toggle="modal"
+                      data-target="#sign-out"
+                      data-backdrop="false"
+                    >
                       <i class="fas fa-sign-out-alt text-danger fa-lg"></i>
                     </a>
                 </li>
