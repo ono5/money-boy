@@ -3,7 +3,6 @@
 package mysqlutils
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/go-sql-driver/mysql"
@@ -19,7 +18,7 @@ func ParseError(err error) *errors.ApiErr {
 	sqlErr, ok := err.(*mysql.MySQLError)
 	if !ok {
 		if strings.Contains(err.Error(), noSearchResult) {
-			return errors.NewNotFoundError(fmt.Sprintf("no record matching given id"))
+			return errors.NewNotFoundError("no record matching given id")
 		}
 		return errors.NewInternalServerError("error parsing database response")
 	}
