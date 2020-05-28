@@ -1,4 +1,4 @@
-// products_controller.go
+// controller/products/products_controller.go
 
 package products
 
@@ -11,6 +11,33 @@ import (
 	"github.com/ono5/money-boy/api/services"
 	"github.com/ono5/money-boy/api/utils/errors"
 )
+
+// UpdateProduct - Update product
+func UpdateProduct(c *gin.Context) {
+	productID, productErr := strconv.ParseUint(c.Param("product_id"), 10, 64)
+	if productErr != nil {
+		err := errors.NewBadRequestError("product id should be a number")
+		c.JSON(err.Status, err)
+		return
+	}
+
+	var product products.Product
+	if err := c.ShouldBindJSON(&product); err != nil {
+		apiErr := errors.NewBadRequestError("invalid json body")
+		c.JSON(apiErr.Status, apiErr)
+		return
+	}
+
+	product.ID = uint(productID)
+
+	result, err := services.UpdateProduct(product)
+	if err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, result)
+}
 
 // CreateProduct - Create product
 func CreateProduct(c *gin.Context) {

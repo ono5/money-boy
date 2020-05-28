@@ -1,4 +1,4 @@
-// product_dao.go
+// domain/products/product_dao.go
 
 package products
 
@@ -7,6 +7,14 @@ import (
 	"github.com/ono5/money-boy/api/utils/errors"
 	"github.com/ono5/money-boy/api/utils/mysqlutils"
 )
+
+// Update - product
+func (p *Product) Update() *errors.ApiErr {
+	if result := products_db.Client.Save(&p); result.Error != nil {
+		return mysqlutils.ParseError(result.Error)
+	}
+	return nil
+}
 
 // Get - product
 func (p *Product) Get() *errors.ApiErr {
