@@ -30,7 +30,9 @@ func UpdateProduct(c *gin.Context) {
 
 	product.ID = uint(productID)
 
-	result, err := services.UpdateProduct(product)
+	isPartial := c.Request.Method == http.MethodPatch
+
+	result, err := services.UpdateProduct(isPartial, product)
 	if err != nil {
 		c.JSON(err.Status, err)
 		return

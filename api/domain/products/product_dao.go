@@ -8,6 +8,17 @@ import (
 	"github.com/ono5/money-boy/api/utils/mysqlutils"
 )
 
+// PartialUpdate - product
+func (p *Product) PartialUpdate() *errors.ApiErr {
+	if result := products_db.Client.
+		Table("products").
+		Where("id IN (?)", p.ID).
+		Updates(&p); result.Error != nil {
+		return mysqlutils.ParseError(result.Error)
+	}
+	return nil
+}
+
 // Update - product
 func (p *Product) Update() *errors.ApiErr {
 	if result := products_db.Client.Save(&p); result.Error != nil {
