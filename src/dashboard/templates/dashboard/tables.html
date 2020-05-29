@@ -95,7 +95,8 @@
                             </tbody>
                         </table>
                         <!-- pagenation -->
-                        {% include "dashboard/pagenation.html" %}
+                        <!-- https://docs.djangoproject.com/en/3.0/ref/templates/builtins/#include -->
+                        {% include "dashboard/pagenation.html" with previous="&laquo;" next="&raquo;"%}
                         <!-- end of pagenation -->
                     </div>
                     <div class="col-xl-6 col-12">
@@ -169,7 +170,7 @@
                             </tbody>
                         </table>
                         <!-- pagenation -->
-                        {% include "dashboard/pagenation.html" %}
+                        {% include "dashboard/pagenation.html" with previous="Previous" next="Next" %}
                         <!-- end of pagenation -->
                     </div>
                 </div>
