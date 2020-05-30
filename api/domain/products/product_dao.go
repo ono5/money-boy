@@ -8,6 +8,14 @@ import (
 	"github.com/ono5/money-boy/api/utils/mysqlutils"
 )
 
+// Delete - product
+func (p *Product) Delete() *errors.ApiErr {
+	if result := products_db.Client.Delete(&p); result.Error != nil {
+		return mysqlutils.ParseError(result.Error)
+	}
+	return nil
+}
+
 // PartialUpdate - product
 func (p *Product) PartialUpdate() *errors.ApiErr {
 	if result := products_db.Client.

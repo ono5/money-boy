@@ -8,6 +8,12 @@ import (
 	"github.com/ono5/money-boy/api/utils/errors"
 )
 
+// DeleteProduct - Service
+func DeleteProduct(productID uint) *errors.ApiErr {
+	product := &products.Product{Model: gorm.Model{ID: productID}}
+	return product.Delete()
+}
+
 // UpdateProduct - Service
 func UpdateProduct(isPartial bool, product products.Product) (*products.Product, *errors.ApiErr) {
 	current, err := GetProduct(product.ID)

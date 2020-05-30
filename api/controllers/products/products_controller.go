@@ -12,12 +12,34 @@ import (
 	"github.com/ono5/money-boy/api/utils/errors"
 )
 
+func getProductID(productIDParam string) (uint, *errors.ApiErr) {
+	productID, productErr := strconv.ParseUint(productIDParam, 10, 64)
+	if productErr != nil {
+		return 0, errors.NewBadRequestError("product id should be a number")
+	}
+	return uint(productID), nil
+}
+
+// DeleteProduct - Delete product
+func DeleteProduct(c *gin.Context) {
+	productID, idErr := getProductID(c.Param("product_id"))
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
+		return
+	}
+
+	if err := services.DeleteProduct(productID); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+	c.JSON(http.StatusOK, map[string]string{"status": "deleted"})
+}
+
 // UpdateProduct - Update product
 func UpdateProduct(c *gin.Context) {
-	productID, productErr := strconv.ParseUint(c.Param("product_id"), 10, 64)
-	if productErr != nil {
-		err := errors.NewBadRequestError("product id should be a number")
-		c.JSON(err.Status, err)
+	productID, idErr := getProductID(c.Param("product_id"))
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
 		return
 	}
 
@@ -28,7 +50,7 @@ func UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	product.ID = uint(productID)
+	product.ID = productID
 
 	isPartial := c.Request.Method == http.MethodPatch
 
@@ -59,14 +81,13 @@ func CreateProduct(c *gin.Context) {
 
 // GetProduct - Get product by product id
 func GetProduct(c *gin.Context) {
-	productID, productErr := strconv.ParseUint(c.Param("product_id"), 10, 64)
-	if productErr != nil {
-		err := errors.NewBadRequestError("product id should be a number")
-		c.JSON(err.Status, err)
+	productID, idErr := getProductID(c.Param("product_id"))
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
 		return
 	}
 
-	product, getErr := services.GetProduct(uint(productID))
+	product, getErr := services.GetProduct(productID)
 	if getErr != nil {
 		c.JSON(getErr.Status, getErr)
 		return
